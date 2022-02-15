@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd"> <!--报红不用管它-->
+<generatorConfiguration>
+
+    <!--指定连接数据库的JDBC驱动包所在位置，指定到本机的完整路径-->
+    <classPathEntry location="/Users/yang/IdeaProjects/mysql-connector-java-8.0.11.jar" />
+
+    <!--配置table表信息内容体，targetRuntime，指定采用Mybatis3的版本-->
+    <context id="msqlTables" targetRuntime="MyBatis3">
+
+        <!--可有可无，抑制生成注释，由于生成的注释都是英文，可以不让它生成-->
+        <commentGenerator>
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <!--配置数据库连接信息-->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/springboot"
+                        password="123456"
+                        userId="root" >
+        </jdbcConnection>
+
+        <!--实体bean的生成器，生成model类(每张表生成一个对应的实体类)，targetPackage指定model类的包名，targetProject指定生成的model放在idea的哪个工程下面-->
+        <javaModelGenerator targetPackage="com.frank.springboot.model" targetProject="/Users/yang/IdeaProjects/SpringbootDemo2021/045-springboot-dubbo-ssm-interface/src/main/java">
+                <property name="enableSubPackages" value="true"/>
+                <!-- 从数据库返回的值被清理前后的空格  -->
+                <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+
+        <!--生成映射文件，Mybatis的Mapper.xml文件，targetPackage指定的mapper.xml文件的包名，targetProject指定生成的mapper.xml放在idea的哪个工程下面-->
+        <!--我们这里数据持久层就叫mapper-->
+        <sqlMapGenerator targetPackage="com.frank.springboot.mapper" targetProject="src/main/java">
+                <property name="enableSubPackages" value="false"/>
+        </sqlMapGenerator>
+
+        <!--生成Mybatis的Mapper接口类文件，targetPackage指定Mapper接口类的包名，targetProject指定生成的Mapper接口类放在idea的哪个工程下面-->
+        <!---若是其他项目，targetProject写绝对路径，当前项目就写相对路径-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.frank.springboot.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="false"/>
+        </javaClientGenerator>
+
+                <!--数据库表名及对应的java模型类名（domainObjectName就是生成的实体类名），如果有10张表，这里就要指定10个table-->
+               <table tableName="t_student" domainObjectName="Student"
+                      enableCountByExample="false"
+                      enableUpdateByExample="false"
+                      enableDeleteByExample="false"
+                      enableSelectByExample="false"
+                      selectByExampleQueryId="false" >
+               </table>
+    </context>
+</generatorConfiguration>
