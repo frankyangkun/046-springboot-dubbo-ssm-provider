@@ -18,13 +18,19 @@
 <!--    <groupId>com.frank.springboot</groupId>-->
     <artifactId>046-springboot-dubbo-ssm-provider</artifactId>
 <!--    <version>0.0.1-SNAPSHOT</version>-->
+    <version>v1.0</version>
 
     <name>046-springboot-dubbo-ssm-provider</name>
     <description>Demo project for Spring Boot</description>
 
-<!--    <properties>-->
+    <properties>
 <!--        <java.version>1.8</java.version>-->
-<!--    </properties>-->
+        <!--2022-03-15由于我这里是用手动创建的dockerfile，编辑配置时就指定了镜像名，
+        没有用到docker的maven插件，所以实际上没用到这个前缀，因此虽然包含了大写字母，但构建时没报错-->
+<!--        <docker.image.prefix>MicroServiceDockerDemo</docker.image.prefix>-->
+<!--        <docker.image.prefix>frankyang1988</docker.image.prefix>&lt;!&ndash;2022-03-15前缀换成我dockerhub的仓库名，必须加这个前缀才能push成功&ndash;&gt;-->
+    </properties>
+
 
     <dependencies>
         <!--
@@ -117,7 +123,49 @@
                     <overwrite>true</overwrite>
                 </configuration>
             </plugin>
+
+<!--            <plugin>-->
+<!--                &lt;!&ndash;2022-03-07 Docker集成maven插件，自动生成DockerFile，打包成docker镜像 &ndash;&gt;-->
+<!--                <groupId>com.spotify</groupId>-->
+<!--                <artifactId>docker-maven-plugin</artifactId>-->
+<!--                <version>1.0.0</version>-->
+
+<!--                <configuration>-->
+<!--                    &lt;!&ndash;镜像名称：MicroServiceDockerDemo/046-springboot-dubbo-ssm-provider&ndash;&gt;-->
+<!--                    <imageName>${docker.image.prefix}/${project.artifactId}</imageName>-->
+<!--                    &lt;!&ndash;指定标签&ndash;&gt;-->
+<!--                    <imageTags>-->
+<!--                        <imageTag>${project.version}</imageTag>-->
+<!--                    </imageTags>-->
+<!--                    &lt;!&ndash;基础镜像jdk1.8&ndash;&gt;-->
+<!--&lt;!&ndash;                    <baseImage>java</baseImage>&ndash;&gt;-->
+<!--&lt;!&ndash;                    &lt;!&ndash;制作者提供本人信息&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                    <maintainer>yangkun yangkun@sefon.com</maintainer>&ndash;&gt;-->
+<!--&lt;!&ndash;                    &lt;!&ndash;切换到ROOT目录&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                    <workdir>/ROOT</workdir>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <cmd>["java","-version"]</cmd>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <entryPoint>["java","-jar","${project.build.finalName}.jar"]</entryPoint>&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;指定Dockerfile路径（没用它)&ndash;&gt;-->
+<!--&lt;!&ndash;                    <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>&ndash;&gt;&lt;!&ndash;构建失败，找不到文件&ndash;&gt;-->
+<!--&lt;!&ndash;                    <dockerDirectory>/src/main/docker</dockerDirectory>&ndash;&gt;&lt;!&ndash;构建失败，找不到文件&ndash;&gt;-->
+<!--                    <dockerDirectory></dockerDirectory> &lt;!&ndash;dockerfile放到项目根目录就不用指定了&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;指定远程docker api地址，把镜像上传到这个服务器&ndash;&gt;-->
+<!--                    <dockerHost>http://131.10.10.73:2375</dockerHost> &lt;!&ndash;必须指定远程端口2375，提前打开远程docker服务器的此端口&ndash;&gt;-->
+
+<!--                    &lt;!&ndash;复制jar包到docker容器指定的目录配置&ndash;&gt;-->
+<!--                    <resources>-->
+<!--                        <resource>-->
+<!--                            <targetPath>/</targetPath> &lt;!&ndash;/ROOT是什么目录？&ndash;&gt;-->
+<!--                            &lt;!&ndash;用于指定需要复制的根目录，${project.build.directory}表示target目录&ndash;&gt;-->
+<!--                            <directory>${project.build.directory}</directory>-->
+<!--                            &lt;!&ndash;用于指定需要复制的文件，${project.build.finalName}.jar，打包后的jar文件&ndash;&gt;-->
+<!--                            <include>${project.build.finalName}.jar</include>-->
+<!--                        </resource>-->
+<!--                    </resources>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
         </plugins>
     </build>
-
 </project>
