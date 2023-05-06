@@ -1,4 +1,4 @@
-FROM java
+FROM openjdk:11
 MAINTAINER yangkun yangkun@sefon.com
 #WORKDIR /ROOT
 VOLUME /tmp
